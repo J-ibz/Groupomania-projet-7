@@ -1,8 +1,8 @@
-### 1. Créez la BDD
+### 1. Créer la BDD
 
 Connectez vous a mysql et créez une base de donnée, nommez-la "groupomania"
 
-### 2. Créez le .env
+### 2. Créer le .env
 
 Allez dans backend>config et créer un fichier .env, collez les variables d'environnement plus bas et remplacez avec vos propres informations. <br />
 
