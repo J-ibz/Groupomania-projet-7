@@ -4,7 +4,7 @@ Connectez vous a mysql et créez une base de donnée, nommez-la "groupomania"
 
 ### 2. Créer le .env
 
-Allez dans backend>config et créer un fichier .env, collez les variables d'environnement plus bas et remplacez avec vos propres informations. <br />
+Allez dans le dossier backend, créez un dossier config et à l'intérieu, créez un fichier .env, collez les variables d'environnement plus bas et remplacez avec vos propres informations. <br />
 
 DB_NAME="groupomania" <br />
 MYSQL_USERNAME="you_username" <br />
