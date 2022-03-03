@@ -144,31 +144,33 @@ export default {
       const userId = sessionStorage.getItem("userId");
       const userToken = sessionStorage.getItem("token");
 
-      axios
-        .get("http://localhost:3000/api/users/" + userId, {
-          headers: {
-            Authorization: "Bearer " + userToken,
-          },
-        })
-        .then((response) => {
-          this.userData = response.data;
-          this.firstName = response.data.firstName;
-          this.lastName = response.data.lastName;
-          this.email = response.data.email;
-          this.role = response.data.role;
-          sessionStorage.setItem("role", response.data.role);
+      if (userId) {
+        axios
+          .get("http://localhost:3000/api/users/" + userId, {
+            headers: {
+              Authorization: "Bearer " + userToken,
+            },
+          })
+          .then((response) => {
+            this.userData = response.data;
+            this.firstName = response.data.firstName;
+            this.lastName = response.data.lastName;
+            this.email = response.data.email;
+            this.role = response.data.role;
+            sessionStorage.setItem("role", response.data.role);
 
-          console.log("response getUser");
-          console.log(response.data);
-        })
-        //Recupération des initiales de l'user
-        .then(() => {
-          let name = `${this.firstName} ${this.lastName}`;
-          let rgx = new RegExp(/(\p{L}{1})\p{L}+/, "gu");
-          let initials = [...name.matchAll(rgx)] || [];
-          this.userInitials = ((initials.shift()?.[1] || "") + (initials.pop()?.[1] || "")).toUpperCase();
-        })
-        .catch((err) => console.log(err));
+            console.log("response getUser");
+            console.log(response.data);
+          })
+          //Recupération des initiales de l'user
+          .then(() => {
+            let name = `${this.firstName} ${this.lastName}`;
+            let rgx = new RegExp(/(\p{L}{1})\p{L}+/, "gu");
+            let initials = [...name.matchAll(rgx)] || [];
+            this.userInitials = ((initials.shift()?.[1] || "") + (initials.pop()?.[1] || "")).toUpperCase();
+          })
+          .catch((err) => console.log(err));
+      }
     },
   },
 };

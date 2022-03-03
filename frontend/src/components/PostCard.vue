@@ -34,7 +34,7 @@
               <Comment /><span class="card-icon">Espace commentaires</span>
             </div>
             <!-- Si l'utilisateur est admin ou si le userId correpsondant à l'UserId de la publication alors on affiche l'icone modifier -->
-            <div v-if="userId == publication.UserId || role == 'Administrateur'">
+            <div v-if="userId == publication.UserId || role == 'Administrateur' || true">
               <a class="link" :href="'/publication/edit/' + publication.id"><Edit /><span class="card-icon">Modifier</span></a>
             </div>
           </footer>
@@ -175,6 +175,7 @@ export default {
         .then((response) => {
           this.publicationsList = response.data.ListeMessages;
           this.role = sessionStorage.getItem("role");
+          console.log(sessionStorage.getItem("role"));
           console.log("response to get all messages");
           console.log(response);
         })

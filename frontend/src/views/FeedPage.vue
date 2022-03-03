@@ -2,12 +2,14 @@
   <div class="container site">
     <!-- <PostCardNav /> -->
 
-    <main class="main">
+    <main v-if="userId" class="main">
       <CreatePost />
 
       <PostCard />
       <!-- <PostCard v-for="(post, index) in sampleBlogPost" :key="index" /> -->
     </main>
+
+    <main v-if="!userId">Vous devez être connecté</main>
     <!-- <PostCardAside /> -->
   </div>
 </template>
@@ -24,13 +26,18 @@ export default {
   // PostCardAside, PostCardNav
 
   data() {
-    return {};
+    return {
+      userId: "",
+    };
   },
   computed: {
     //On récupère nos states depuis le store
     sampleBlogPost() {
       return this.$store.state.sampleBlogPost;
     },
+  },
+  mounted() {
+    this.userId = sessionStorage.getItem("userId");
   },
 };
 </script>
