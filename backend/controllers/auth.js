@@ -2,11 +2,24 @@ const db = require("../models");
 const User = db.users;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+var emailValidator = require("email-validator");
+var passwordValidator = require("password-validator");
 require("dotenv").config({ path: "./config/.env" });
+
+//Création du schéma de mot de passe
+const passwordSchema = new passwordValidator();
+passwordSchema.is().min(5).is().max(20).has().uppercase(1).has().lowercase().has().digits(2).has().not().spaces();
 
 // Creation d'un nouvel utilisateur
 exports.signup = (req, res, next) => {
-  bcrypt
+  if (!emailValidator.validate(req.body.email)) {
+    return res.status(400).json({ message: "Merci de rentrer une adresse email valide" });
+  } else if (!passwordSchema.validate(req.body.password)) {
+    return res.status(400).json({
+      message: "Le mot de passe doit contenir au moins 5 caractères, 1 majuscule et 2 chiffres",
+    });
+  }
+  return bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
       const user = new User({
@@ -16,7 +29,7 @@ exports.signup = (req, res, next) => {
         email: req.body.email,
         password: hash,
       });
-      user
+      return user
         .save()
         .then(() => res.status(201).json({ message: "Votre compte a été enregistré avec succès!" }))
         .catch((error) => res.status(401).json({ error }));
@@ -48,7 +61,7 @@ exports.login = (req, res, next) => {
       if (!user) {
         return res.status(404).json({ error: "Utilisateur non trouvé !" });
       }
-      bcrypt
+      return bcrypt
         .compare(req.body.password, user.password)
         .then((valid) => {
           if (!valid) {

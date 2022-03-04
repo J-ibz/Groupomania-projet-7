@@ -34,7 +34,7 @@
               <Comment /><span class="card-icon">Espace commentaires</span>
             </div>
             <!-- Si l'utilisateur est admin ou si le userId correpsondant à l'UserId de la publication alors on affiche l'icone modifier -->
-            <div v-if="userId == publication.UserId || role == 'Administrateur' || true">
+            <div v-if="userId == publication.UserId || role == 'Administrateur'">
               <a class="link" :href="'/publication/edit/' + publication.id"><Edit /><span class="card-icon">Modifier</span></a>
             </div>
           </footer>
